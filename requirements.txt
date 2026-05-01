@@ -6,6 +6,5 @@ python-multipart==0.0.12
 jinja2==3.1.4
 passlib==1.7.4
 openai==1.44.0
-pillow==10.3.0
 PyJWT==2.8.0
 python-dotenv==1.0.1
