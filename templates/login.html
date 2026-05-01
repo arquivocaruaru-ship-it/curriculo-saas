@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Login</h2>
+
+<form method="post" action="/login">
+    <input type="email" name="email" placeholder="Digite seu email" required>
+
+    <input type="password" name="senha" placeholder="Digite sua senha" required>
+
+    <button type="submit">Entrar</button>
+</form>
+
+{% if erro %}
+    <p style="color:red;">{{ erro }}</p>
+{% endif %}
+
+<a class="link" href="/register">Criar conta</a>
+
+<a href="/recuperar">Esqueci minha senha</a>
+
+{% endblock %}

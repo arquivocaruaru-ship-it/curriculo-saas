@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Caruaru Currículo | Currículos profissionais em minutos</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* ANIMAÇÕES */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+/* DECORAÇÃO DE FUNDO */
+.bg-decoration {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.circle {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.05);
+    animation: float 6s ease-in-out infinite;
+}
+
+.circle-1 {
+    width: 300px;
+    height: 300px;
+    top: -100px;
+    right: -100px;
+}
+
+.circle-2 {
+    width: 500px;
+    height: 500px;
+    bottom: -200px;
+    left: -200px;
+    animation-delay: 1s;
+}
+
+.circle-3 {
+    width: 200px;
+    height: 200px;
+    top: 50%;
+    left: 20%;
+    animation-delay: 2s;
+}
+
+/* CONTAINER PRINCIPAL */
+.container {
+    position: relative;
+    z-index: 1;
+    max-width: 1400px;
+    margin: 0 auto;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 40px;
+}
+
+/* LADO ESQUERDO */
+.left {
+    flex: 1;
+    padding: 60px;
+    animation: fadeInUp 0.8s ease-out;
+}
+
+.badge {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    padding: 8px 20px;
+    border-radius: 50px;
+    font-size: 14px;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 30px;
+    letter-spacing: 1px;
+}
+
+.left h1 {
+    font-size: 52px;
+    font-weight: 800;
+    color: white;
+    margin-bottom: 20px;
+    line-height: 1.2;
+}
+
+.gradient-text {
+    background: linear-gradient(135deg, #fff 0%, #e0d7ff 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.left .description {
+    font-size: 18px;
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.6;
+    margin-bottom: 30px;
+}
+
+/* FEATURES */
+.features {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+}
+
+.feature {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 10px 20px;
+    border-radius: 50px;
+    color: white;
+    font-size: 14px;
+}
+
+.feature-icon {
+    font-size: 20px;
+}
+
+/* BOTÕES */
+.buttons {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 50px;
+    flex-wrap: wrap;
+}
+
+.btn {
+    padding: 15px 35px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+}
+
+.btn-primary {
+    background: white;
+    color: #667eea;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    animation: pulse 0.5s ease;
+}
+
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    backdrop-filter: blur(10px);
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+}
+
+/* ESTATÍSTICAS */
+.stats {
+    display: flex;
+    gap: 40px;
+    margin-top: 40px;
+}
+
+.stat-item {
+    text-align: left;
+}
+
+.stat-number {
+    font-size: 28px;
+    font-weight: 800;
+    color: white;
+    display: block;
+}
+
+.stat-label {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.7);
+    margin-top: 5px;
+}
+
+/* LADO DIREITO */
+.right {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: fadeInUp 0.8s ease-out 0.2s backwards;
+}
+
+.mockup {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+}
+
+.mockup-card {
+    background: white;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    transform: rotate(3deg);
+    transition: transform 0.3s ease;
+}
+
+.mockup-card:hover {
+    transform: rotate(0deg);
+}
+
+.mockup-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.mockup-avatar {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.mockup-info h3 {
+    color: #333;
+    font-size: 18px;
+}
+
+.mockup-info p {
+    color: #666;
+    font-size: 14px;
+}
+
+.mockup-section {
+    margin-bottom: 15px;
+}
+
+.mockup-section h4 {
+    color: #667eea;
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+.mockup-section p {
+    color: #555;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.mockup-tag {
+    display: inline-block;
+    background: #f0f0f0;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    color: #667eea;
+    margin-right: 8px;
+    margin-bottom: 8px;
+}
+
+.floating-badge {
+    position: absolute;
+    bottom: 30px;
+    right: -20px;
+    background: #4caf50;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-size: 14px;
+    font-weight: 600;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    animation: pulse 2s infinite;
+}
+
+/* RESPONSIVIDADE */
+@media (max-width: 968px) {
+    .container {
+        flex-direction: column;
+        padding: 20px;
+    }
+    
+    .left {
+        padding: 40px 20px;
+    }
+    
+    .left h1 {
+        font-size: 36px;
+    }
+    
+    .features {
+        justify-content: center;
+    }
+    
+    .buttons {
+        justify-content: center;
+    }
+    
+    .stats {
+        justify-content: center;
+    }
+    
+    .right {
+        margin-top: 40px;
+    }
+    
+    .mockup-card {
+        max-width: 400px;
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 480px) {
+    .left h1 {
+        font-size: 28px;
+    }
+    
+    .description {
+        font-size: 16px;
+    }
+    
+    .btn {
+        padding: 12px 25px;
+        font-size: 14px;
+    }
+    
+    .stats {
+        gap: 20px;
+    }
+    
+    .stat-number {
+        font-size: 22px;
+    }
+}
+</style>
+
+</head>
+<body>
+
+<div class="bg-decoration">
+    <div class="circle circle-1"></div>
+    <div class="circle circle-2"></div>
+    <div class="circle circle-3"></div>
+</div>
+
+<div class="container">
+    <div class="left">
+        <div class="badge">
+            ✨ IA Avançada
+        </div>
+        
+        <h1>
+            Crie um currículo<br>
+            <span class="gradient-text">que se destaca</span>
+        </h1>
+        
+        <p class="description">
+            Transforme suas experiências em um currículo profissional<br>
+            com inteligência artificial. Pronto em minutos, não em horas.
+        </p>
+        
+        <div class="features">
+            <div class="feature">
+                <span class="feature-icon">🤖</span>
+                <span>IA Inteligente</span>
+            </div>
+            <div class="feature">
+                <span class="feature-icon">📄</span>
+                <span>Múltiplos modelos</span>
+            </div>
+            <div class="feature">
+                <span class="feature-icon">⚡</span>
+                <span>Rápido e fácil</span>
+            </div>
+        </div>
+        
+        <div class="buttons">
+            <button class="btn btn-primary" onclick="location.href='/register'">
+                🚀 Começar agora
+            </button>
+            <button class="btn btn-secondary" onclick="location.href='/login'">
+                Já tenho conta
+            </button>
+        </div>
+        
+        <div class="stats">
+            <div class="stat-item">
+                <span class="stat-number">10k+</span>
+                <span class="stat-label">Currículos criados</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">98%</span>
+                <span class="stat-label">de satisfação</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">5min</span>
+                <span class="stat-label">tempo médio</span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="right">
+        <div class="mockup">
+            <div class="mockup-card">
+                <div class="mockup-header">
+                    <div class="mockup-avatar">
+                        JP
+                    </div>
+                    <div class="mockup-info">
+                        <h3>João Paulo Silva</h3>
+                        <p>Desenvolvedor Full Stack</p>
+                    </div>
+                </div>
+                
+                <div class="mockup-section">
+                    <h4>Resumo Profissional</h4>
+                    <p>Desenvolvedor com ampla experiência em Python e JavaScript. Atuação em projetos de grande escala com foco em resultados.</p>
+                </div>
+                
+                <div class="mockup-section">
+                    <h4>Experiência</h4>
+                    <p><strong>Tech Solutions</strong> - Desenvolvedor Pleno<br>
+                    <small>Desenvolvimento de APIs e sistemas web</small></p>
+                </div>
+                
+                <div class="mockup-section">
+                    <h4>Habilidades</h4>
+                    <div>
+                        <span class="mockup-tag">Python</span>
+                        <span class="mockup-tag">FastAPI</span>
+                        <span class="mockup-tag">React</span>
+                        <span class="mockup-tag">SQL</span>
+                    </div>
+                </div>
+            </div>
+            <div class="floating-badge">
+                ⭐ Gerado por IA
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Animação suave ao scroll (opcional)
+    document.querySelectorAll('.btn').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            // Efeito ripple simples
+            this.style.transform = 'scale(0.98)';
+            setTimeout(() => {
+                this.style.transform = '';
+            }, 200);
+        });
+    });
+    
+    // Contador animado (opcional)
+    const observerOptions = {
+        threshold: 0.5,
+        rootMargin: "0px"
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const numbers = document.querySelectorAll('.stat-number');
+                numbers.forEach(num => {
+                    const target = parseInt(num.innerText);
+                    let current = 0;
+                    const increment = target / 50;
+                    const timer = setInterval(() => {
+                        current += increment;
+                        if (current >= target) {
+                            num.innerText = target + (num.innerText.includes('+') ? '+' : '%');
+                            clearInterval(timer);
+                        } else {
+                            num.innerText = Math.floor(current) + (num.innerText.includes('+') ? '+' : '');
+                        }
+                    }, 20);
+                });
+                observer.disconnect();
+            }
+        });
+    }, observerOptions);
+    
+    observer.observe(document.querySelector('.stats'));
+</script>
+
+</body>
+</html>

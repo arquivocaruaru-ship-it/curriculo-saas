@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2 style="text-align:center;">Pagamento via PIX</h2>
+
+<div style="text-align:center; margin-top:30px;">
+
+    <div style="
+        display:inline-block;
+        padding:25px;
+        border:1px solid #ddd;
+        border-radius:12px;
+        background:white;
+        width:300px;
+    ">
+
+        <h3>Plano Mensal</h3>
+
+        <p style="font-size:26px; color:#2a7b88; font-weight:bold;">
+            R$ 10,00
+        </p>
+
+        <!-- FRASE DESTACADA -->
+        <p style="
+            font-size:13px;
+            color:#2a7b88;
+            background:#e8f3f5;
+            display:inline-block;
+            padding:5px 10px;
+            border-radius:6px;
+        ">
+            Acesso completo por 30 dias
+        </p>
+
+        <hr style="margin:20px 0;">
+
+        <p style="font-size:14px;">
+            Faça o pagamento via PIX usando a chave abaixo:
+        </p>
+
+        <!-- CHAVE PIX -->
+        <div id="pix-chave" style="
+            background:#f5f5f5;
+            padding:10px;
+            border-radius:6px;
+            font-size:14px;
+            margin-top:10px;
+            word-break:break-all;
+        ">
+            sua-chave-pix-aqui
+        </div>
+
+        <!-- BOTÃO COPIAR -->
+        <button class="botao" style="margin-top:10px;" onclick="copiarPix()">
+            📋 Copiar chave PIX
+        </button>
+
+        <p style="font-size:12px; color:#888; margin-top:15px;">
+            Após o pagamento, o acesso será liberado automaticamente.
+        </p>
+
+    </div>
+
+</div>
+
+<button class="botao" style="margin-top:10px; background:green;" onclick="location.href='/liberar'">
+    ✅ Já paguei
+</button>
+
+<a href="/planos" class="link" style="display:block; text-align:center; margin-top:20px;">
+    ⬅ Voltar
+</a>
+
+<!-- SCRIPT -->
+<script>
+function copiarPix() {
+    const chave = document.getElementById("pix-chave").innerText;
+
+    navigator.clipboard.writeText(chave);
+
+    alert("Chave PIX copiada!");
+}
+</script>
+
+{% endblock %}

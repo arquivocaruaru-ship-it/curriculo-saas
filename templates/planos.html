@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2 style="text-align:center;">Escolha seu plano</h2>
+
+<div style="text-align:center; margin-top:30px;">
+
+    <div style="
+        display:inline-block;
+        border:1px solid #ddd;
+        padding:25px;
+        border-radius:12px;
+        background:white;
+        width:260px;
+    ">
+
+        <h3>Plano Mensal</h3>
+
+        <p style="font-size:26px; color:#2a7b88; font-weight:bold;">
+            R$ 10,00
+        </p>
+
+        <!-- FRASE DESTACADA -->
+        <p style="
+            font-size:13px;
+            color:#2a7b88;
+            background:#e8f3f5;
+            display:inline-block;
+            padding:5px 10px;
+            border-radius:6px;
+            margin-top:-10px;
+        ">
+            Acesso completo por 30 dias
+        </p>
+
+        <p style="font-size:14px; margin-top:15px;">
+            ✔ Criar currículo<br>
+            ✔ Editar ilimitado<br>
+            ✔ Baixar PDF
+        </p>
+
+        <p style="font-size:12px; color:#888;">
+            Liberação imediata após pagamento
+        </p>
+
+        <!-- BOTÃO FUNCIONANDO -->
+        <button class="botao" style="margin-top:15px;" onclick="location.href='/assinar'">
+            Assinar agora
+        </button>
+
+    </div>
+
+</div>
+
+<a href="/dashboard" class="link" style="display:block; text-align:center; margin-top:20px;">
+    ⬅ Voltar
+</a>
+
+{% endblock %}

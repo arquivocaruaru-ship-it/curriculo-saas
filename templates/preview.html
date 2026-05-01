@@ -1,0 +1,237 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+    body {
+        font-family: Cambria, serif;
+    }
+
+    .curriculo {
+        max-width: 800px;
+        margin: auto;
+        font-family: Cambria, serif;
+        font-size: 14px;
+    }
+
+    .topo {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .curriculo h1 {
+        margin-bottom: 5px;
+        font-size: 22px;
+    }
+
+    .curriculo p {
+        color: #555;
+        margin: 5px 0;
+        font-size: 14px;
+    }
+
+    .foto {
+        width: 100px;
+        height: 130px;
+        object-fit: contain;
+        background-color: white;
+    }
+
+    .section {
+        margin-top: 15px;
+    }
+
+    .section h2 {
+        color: #2a7b88;
+        border-bottom: 1px solid #2a7b88;
+        font-size: 15px;
+        margin-bottom: 5px;
+    }
+
+    ul {
+        margin: 5px 0;
+        padding-left: 18px;
+    }
+
+    li {
+        margin-bottom: 5px;
+    }
+
+    @media print {
+        body {
+            background: white !important;
+        }
+
+        .container {
+            box-shadow: none !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+
+        button, a {
+            display: none !important;
+        }
+
+        .curriculo {
+            max-width: 100%;
+        }
+    }
+</style>
+
+<div class="curriculo">
+
+    <!-- TOPO -->
+    <div class="topo">
+        <div>
+            <h1>{{ dados.nome }}</h1>
+
+            <p>
+                {% if dados.data_nascimento %}
+                    {{ dados.data_nascimento }}
+                {% endif %}
+
+                {% if dados.estado_civil %}
+                    | {{ dados.estado_civil }}
+                {% endif %}
+
+                {% if dados.cnh %}
+                    | CNH: {{ dados.cnh }}
+                {% endif %}
+            </p>
+
+            <p>
+                {{ dados.email }} | {{ dados.telefone }}
+                {% if dados.cidade %}
+                    | {{ dados.cidade }}
+                    {% if dados.estado %}
+                        - {{ dados.estado }}
+                    {% endif %}
+                {% endif %}
+            </p>
+
+            <!-- OBJETIVO NO TOPO (JOVEM) -->
+            {% if not dados.experiencias or dados.experiencias|length == 0 %}
+            <div class="section">
+                <h2>Objetivo</h2>
+                <p style="font-size:16px; font-weight:600; color:#2a7b88; margin-top:5px;">
+                    Em busca da primeira oportunidade profissional
+                </p>
+            </div>
+            {% endif %}
+        </div>
+
+        {% if curriculo and curriculo.foto %}
+            <img src="/{{ curriculo.foto }}" class="foto">
+        {% endif %}
+    </div>
+
+    <hr>
+
+    <!-- PERFIL (SÓ JOVEM) -->
+    {% if not dados.experiencias or dados.experiencias|length == 0 %}
+    <div class="section">
+        <h2>Perfil</h2>
+        <p>
+            Candidato em início de carreira, com grande disposição para aprender,
+            responsabilidade e comprometimento. Busca desenvolver habilidades profissionais
+            e contribuir com dedicação e organização no ambiente de trabalho.
+        </p>
+    </div>
+    {% endif %}
+
+    <!-- RESUMO / APRESENTAÇÃO -->
+    <div class="section">
+        <h2>
+            {% if not dados.experiencias or dados.experiencias|length == 0 %}
+                Apresentação
+            {% else %}
+                Resumo Profissional
+            {% endif %}
+        </h2>
+        <p>{{ dados.resumo }}</p>
+    </div>
+
+    <!-- EXPERIÊNCIA -->
+    {% if dados.experiencias and dados.experiencias|length > 0 %}
+    <div class="section">
+        <h2>Experiência Profissional</h2>
+
+        {% for e in dados.experiencias %}
+        <div style="margin-bottom:10px;">
+            <strong>{{ e.cargo }}</strong><br>
+            {{ e.empresa }}
+            {% if e.periodo %}
+                ({{ e.periodo }})
+            {% endif %}
+
+            <ul>
+                {% for a in e.atividades %}
+                <li>{{ a }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- FORMAÇÃO -->
+    <div class="section">
+        <h2>Formação</h2>
+
+        <ul>
+            {% for f in dados.formacao %}
+            <li>
+                <strong>{{ f.nivel }}</strong>
+
+                {% if f.instituicao %}
+                    - {{ f.instituicao }}
+                {% endif %}
+
+                {% if f.curso %}
+                    ({{ f.curso }})
+                {% endif %}
+
+                {% if f.ano_conclusao %}
+                    - {{ f.ano_conclusao }}
+                {% endif %}
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <!-- CURSOS -->
+    {% if dados.cursos and dados.cursos|length > 0 %}
+    <div class="section">
+        <h2>Cursos</h2>
+
+        <ul>
+            {% for c in dados.cursos %}
+            <li>{{ c }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+
+    <!-- HABILIDADES -->
+    <div class="section">
+        <h2>Habilidades</h2>
+
+        <ul>
+            {% for h in dados.habilidades %}
+            <li>{{ h }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <br>
+
+    <button onclick="window.print()">🖨️ Imprimir / Salvar PDF</button>
+
+    <br><br>
+
+    <a class="link" href="/dashboard">⬅ Voltar</a>
+
+</div>
+
+{% endblock %}

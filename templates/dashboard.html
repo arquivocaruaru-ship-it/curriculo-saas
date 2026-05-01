@@ -1,0 +1,195 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Dashboard</h1>
+
+<a href="/logout" style="float:right;">Sair</a>
+
+<div class="card">
+    👋 Bem-vindo, <strong>{{ usuario.email }}</strong>
+</div>
+
+<div class="grid">
+
+    <!-- MEU CURRÍCULO -->
+    <div class="box" onclick="location.href='/editar-curriculo'">
+        <h3>📄 Meu Currículo</h3>
+        <p>Editar informações</p>
+    </div>
+
+    <!-- VISUALIZAR -->
+    <div class="box" onclick="location.href='/preview-check'">
+        <h3>👁 Visualizar</h3>
+        <p>Ver e baixar PDF</p>
+    </div>
+
+    <!-- ASSINATURA -->
+    <div class="box">
+
+        <h3>💳 Assinatura</h3>
+
+        {% if pago %}
+            <p style="color:green;">✔ Plano ativo</p>
+
+            <p style="font-size:13px;">
+                Acesso liberado ao sistema
+            </p>
+
+            <button class="botao" onclick="location.href='/planos'">
+                Renovar plano
+            </button>
+
+        {% else %}
+            <p style="color:red;">❌ Plano não ativo</p>
+
+            <button class="botao" onclick="location.href='/planos'">
+                Assinar plano
+            </button>
+        {% endif %}
+
+    </div>
+
+    <!-- 🔥 NOVA BOX: ESCOLHA DE MODELO -->
+    <div class="box">
+
+    <h3>🎨 Escolha o Modelo</h3>
+
+    <form>
+
+    <label class="modelo-item">
+        <input type="radio" name="modelo" value="1"
+        {% if curriculo and curriculo.modelo == 1 %}checked{% endif %}
+        onchange="window.location.href='/salvar_modelo/1'">
+        Modelo 1
+    </label>
+
+    <label class="modelo-item">
+        <input type="radio" name="modelo" value="2"
+        {% if curriculo and curriculo.modelo == 2 %}checked{% endif %}
+        onchange="window.location.href='/salvar_modelo/2'">
+        Modelo 2
+    </label>
+
+    <label class="modelo-item">
+        <input type="radio" name="modelo" value="3"
+        {% if curriculo and curriculo.modelo == 3 %}checked{% endif %}
+        onchange="window.location.href='/salvar_modelo/3'">
+        Modelo 3
+    </label>
+
+    <label class="modelo-item">
+        <input type="radio" name="modelo" value="4"
+        {% if curriculo and curriculo.modelo == 4 %}checked{% endif %}
+        onchange="window.location.href='/salvar_modelo/4'">
+        Modelo 4
+    </label>
+
+</form>
+    </div>
+
+</div>
+
+    </div>
+
+</div>
+
+<style>
+
+.grid {
+    display: flex;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.box {
+    flex: 1;
+    padding: 20px;
+    border-radius: 12px;
+    background: white;
+    border: 1px solid #ddd;
+    cursor: pointer;
+    text-align: center;
+}
+
+.box h3 {
+    color: #2a7b88;
+}
+
+.card {
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 10px;
+    background: #f5f5f5;
+}
+
+.botao {
+    margin-top: 10px;
+    padding: 10px;
+    background: #2a7b88;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+/* 🔥 MODELOS */
+.modelos {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.modelos button {
+    padding: 8px;
+    border-radius: 6px;
+    border: none;
+    background: #eee;
+    cursor: pointer;
+}
+
+.modelos button:hover {
+    background: #2a7b88;
+    color: white;
+}
+
+@media (max-width: 700px) {
+    .grid {
+        flex-direction: column;
+    }
+}
+
+.modelos button {
+    width: 100%;
+    padding: 10px;
+    border-radius: 6px;
+    border: none;
+    background: #eee;
+    cursor: pointer;
+}
+
+/* 🔥 ESSENCIAL */
+.modelos form {
+    pointer-events: auto;
+}
+
+.box {
+    pointer-events: auto;
+}
+
+.modelo-item {
+    display: block;
+    padding: 8px;
+    margin-bottom: 6px;
+    border-radius: 6px;
+    background: #eee;
+    cursor: pointer;
+}
+
+.modelo-item input {
+    margin-right: 8px;
+}
+</style>
+
+{% endblock %}

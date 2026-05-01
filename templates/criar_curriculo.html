@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+.container {
+    max-width: 800px;
+    margin: auto;
+}
+
+h2 {
+    color: #2a7b88;
+    margin-bottom: 15px;
+}
+
+/* CARD */
+.card {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+}
+
+/* TEXTAREA */
+textarea {
+    width: 100%;
+    height: 300px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 12px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    resize: vertical;
+}
+
+/* INPUT FILE */
+input[type="file"] {
+    width: 100%;
+}
+
+/* BOTÃO */
+button {
+    background: #2a7b88;
+    color: white;
+    border: none;
+    padding: 12px;
+    width: 100%;
+    border-radius: 8px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #256d78;
+}
+
+/* LINK */
+.link {
+    display: inline-block;
+    margin-top: 10px;
+    text-decoration: none;
+    color: #2a7b88;
+    font-size: 14px;
+}
+
+/* RESPONSIVO */
+@media (max-width: 600px) {
+    textarea {
+        height: 250px;
+    }
+}
+</style>
+
+<div class="container">
+
+<h2>Criar Currículo</h2>
+
+<form method="post" action="/criar-curriculo" enctype="multipart/form-data">
+
+    <div class="card">
+        <textarea name="texto" rows="14" placeholder="Preencha seguindo o modelo abaixo:
+
+Cole ou digite suas informações Aqui: 
+
+Nome completo, Data de nascimento, Estado Civil, CNH, Cidade, Telefone, Email, Formação Escolar/Acadêmica, Cursos e Experiências (função, empresa e período).
+
+Agora é por nossa conta. Deixe nosso sistema transformar seus dados em um currículo verdadeiramente profissional em poucos segundos."></textarea>
+    </div>
+
+    <div class="card">
+        <label><strong>Foto (opcional):</strong></label><br><br>
+        <input type="file" name="foto">
+    </div>
+
+    <button type="submit">Salvar</button>
+
+</form>
+
+<a href="/dashboard" class="link">⬅ Voltar</a>
+
+</div>
+
+{% endblock %}

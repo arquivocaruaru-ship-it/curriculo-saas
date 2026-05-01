@@ -1,0 +1,152 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Editar Currículo</h2>
+
+<form method="post" action="/editar-curriculo" enctype="multipart/form-data">
+
+<div class="layout">
+
+    <!-- ESQUERDA -->
+    <div class="col-esquerda">
+
+        <div class="card">
+            <textarea name="dados_brutos" required>{{ curriculo.dados_brutos }}</textarea>
+        </div>
+
+        <button type="submit" onclick="iniciarLoading()">💾 Salvar Alterações</button>
+
+    </div>
+
+    <!-- DIREITA -->
+    <div class="col-direita">
+
+        {% if curriculo.foto %}
+        <div class="card" id="foto-atual">
+            <p><strong>Foto atual:</strong></p>
+            <img src="/{{ curriculo.foto }}" class="foto">
+        </div>
+        {% endif %}
+
+        <div class="card">
+            <label><strong>Trocar foto:</strong></label><br><br>
+            <input type="file" name="foto" accept="image/*" onchange="previewFoto(event)">
+        </div>
+
+        <div id="preview-container" style="display:none;" class="card">
+            <p><strong>Nova foto:</strong></p>
+            <img id="preview-img" class="foto">
+        </div>
+
+    </div>
+
+</div>
+
+</form>
+
+<a href="/dashboard" class="link">⬅ Voltar</a>
+
+<!-- CSS -->
+<style>
+
+.layout {
+    display: flex;
+    gap: 20px;
+}
+
+/* COLUNAS */
+.col-esquerda {
+    flex: 2;
+}
+
+.col-direita {
+    flex: 1;
+}
+
+/* TEXTAREA */
+textarea {
+    width: 100%;
+    height: 500px;
+    resize: vertical;
+}
+
+/* FOTO */
+.foto {
+    width: 100%;
+    max-width: 180px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    background: #fff;
+}
+
+/* 📱 MOBILE */
+@media (max-width: 700px) {
+    .layout {
+        flex-direction: column;
+    }
+}
+
+</style>
+
+<!-- JS FOTO -->
+<script>
+function previewFoto(event) {
+    const input = event.target;
+    const preview = document.getElementById('preview-img');
+    const container = document.getElementById('preview-container');
+    const fotoAtual = document.getElementById('foto-atual');
+
+    if (input.files && input.files[0]) {
+        preview.src = URL.createObjectURL(input.files[0]);
+        container.style.display = 'block';
+
+        if (fotoAtual) {
+            fotoAtual.style.display = 'none';
+        }
+    }
+}
+</script>
+
+<!-- LOADING -->
+<div id="loading-box" style="
+    display:none;
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.6);
+    color:white;
+    font-size:20px;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    z-index:9999;
+">
+    <p>Seu currículo está sendo atualizado...</p>
+    <p id="contador">10</p>
+</div>
+
+<script>
+function iniciarLoading() {
+
+    const box = document.getElementById("loading-box");
+    const contador = document.getElementById("contador");
+
+    box.style.display = "flex";
+
+    let tempo = 10;
+
+    const intervalo = setInterval(() => {
+        tempo--;
+        contador.innerText = tempo;
+
+        if (tempo <= 0) {
+            clearInterval(intervalo);
+        }
+    }, 1000);
+}
+</script>
+
+{% endblock %}

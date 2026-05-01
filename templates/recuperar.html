@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Recuperar Senha</title>
+</head>
+<body>
+
+<h2>Recuperar Senha</h2>
+
+<form method="post" action="/recuperar">
+    <input type="email" name="email" placeholder="Digite seu email" required>
+    <br><br>
+    <button type="submit">Recuperar</button>
+</form>
+
+<br>
+
+{% if erro %}
+<p style="color:red;">{{ erro }}</p>
+{% endif %}
+
+{% if sucesso %}
+<p style="color:green;">{{ sucesso }}</p>
+{% endif %}
+
+<br>
+<a href="/login">Voltar</a>
+
+</body>
+</html>
