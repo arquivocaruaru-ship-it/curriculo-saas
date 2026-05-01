@@ -12,8 +12,6 @@ from models import Curriculo
 from auth import hash_senha, verificar_senha, validar_forca_senha, gerar_senha_temporaria
 from ia import processar_curriculo
 
-from rembg import remove
-
 import json
 import os
 import shutil
@@ -77,7 +75,6 @@ def register(request: Request, email: str = Form(...), senha: str = Form(...), d
             "erro": "Usuário já existe"
         })
 
-    # NOVO: Valida força da senha
     valida, msg = validar_forca_senha(senha)
     if not valida:
         return templates.TemplateResponse("register.html", {
@@ -123,7 +120,6 @@ def recuperar_senha(request: Request, email: str = Form(...), db: Session = Depe
             "erro": "Email não encontrado"
         })
 
-    # Usando a função do auth.py
     nova_senha = gerar_senha_temporaria()
     usuario.senha = hash_senha(nova_senha)
     db.commit()
@@ -140,7 +136,7 @@ def logout():
     return response
 
 # =========================
-# ROTAS PROTEGIDAS (DASHBOARD E CURRÍCULO)
+# ROTAS PROTEGIDAS
 # =========================
 
 @router.get("/dashboard", response_class=HTMLResponse)
@@ -161,7 +157,7 @@ def dashboard(request: Request, db: Session = Depends(get_db)):
         "request": request,
         "usuario": usuario,
         "curriculo": curriculo,
-        "pago": True  # ajuste depois quando integrar pagamento
+        "pago": True
     })
 
 @router.get("/criar-curriculo", response_class=HTMLResponse)
@@ -190,43 +186,23 @@ def criar_curriculo(
     if not user_id:
         return RedirectResponse(url="/")
 
-    # Processa com IA (usa cache automaticamente)
     dados_tratados = processar_curriculo(texto)
     
     if not dados_tratados:
-        # Se falhou, retorna erro
         return templates.TemplateResponse("criar_curriculo.html", {
             "request": request,
             "erro": "Erro ao processar currículo. Tente novamente."
         })
 
-    # Processa foto se enviada
     caminho_foto = None
     if foto and foto.filename:
         os.makedirs("static/fotos", exist_ok=True)
-        
-        # Salva temporariamente
         temp_path = os.path.join("static", "fotos", f"temp_{user_id}_{foto.filename}")
         with open(temp_path, "wb") as buffer:
             shutil.copyfileobj(foto.file, buffer)
+        caminho_foto = temp_path
 
-        # Remove fundo com rembg
-        with open(temp_path, "rb") as f:
-            input_data = f.read()
-
-        try:
-            output_data = remove(input_data)
-            caminho_foto = os.path.join("static", "fotos", f"user_{user_id}.png")
-            with open(caminho_foto, "wb") as f:
-                f.write(output_data)
-            os.remove(temp_path)
-            print("✅ Foto processada com rembg")
-        except Exception as e:
-            print("ERRO REMBG:", e)
-            caminho_foto = temp_path
-
-    # Salva no banco
-        novo = Curriculo(
+    novo = Curriculo(
         user_id=int(user_id),
         dados_brutos=texto,
         dados_tratados=json.dumps(dados_tratados) if dados_tratados else None,
@@ -272,7 +248,6 @@ def salvar_edicao(
     if not curriculo:
         return RedirectResponse(url="/dashboard")
 
-    # Processa novos dados com IA (cache desabilitado na edição)
     dados_novos = processar_curriculo(dados_brutos)
     
     if not dados_novos:
@@ -282,7 +257,6 @@ def salvar_edicao(
             "erro": "Erro ao processar currículo. Tente novamente."
         })
 
-    # Mantém campos bloqueados (exemplo: nome e resumo não podem mudar)
     try:
         dados_antigos = json.loads(curriculo.dados_tratados) if curriculo.dados_tratados else {}
         if dados_antigos:
@@ -293,21 +267,15 @@ def salvar_edicao(
     except Exception as e:
         print("Erro ao manter dados antigos:", e)
 
-    # Processa nova foto se enviada
     if foto and foto.filename:
         os.makedirs("static/fotos", exist_ok=True)
         caminho_foto = os.path.join("static", "fotos", f"user_{user_id}_{foto.filename}")
         with open(caminho_foto, "wb") as buffer:
             shutil.copyfileobj(foto.file, buffer)
         curriculo.foto = caminho_foto
-        
-        # Limpa cache após alterar foto
- 
 
-    # Atualiza banco
     curriculo.dados_brutos = dados_brutos
     curriculo.dados_tratados = json.dumps(dados_novos) if dados_novos else None
-   
     db.commit()
 
     return RedirectResponse(url="/dashboard", status_code=302)
