@@ -1,31 +1,15 @@
-{% extends "base.html" %}
-
-{% block content %}
-
-<h2 style="text-align:center;">Criar Conta</h2>
-
-<div style="max-width: 400px; margin: auto;">
-
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Registrar</title>
+</head>
+<body>
+    <h2>Criar Conta</h2>
     <form method="post" action="/register">
-
-        <input type="email" name="email" placeholder="Seu email" required>
-
-        <input type="password" name="senha" placeholder="Sua senha" required>
-
+        <input type="email" name="email" placeholder="Email" required><br>
+        <input type="password" name="senha" placeholder="Senha" required><br>
         <button type="submit">Cadastrar</button>
-
     </form>
-
-    {% if erro %}
-        <p style="color:red; text-align:center; margin-top:10px;">
-            {{ erro }}
-        </p>
-    {% endif %}
-
-    <a href="/" class="link" style="display:block; text-align:center;">
-        ⬅ Voltar
-    </a>
-
-</div>
-
-{% endblock %}
+    <a href="/login">Já tenho conta</a>
+</body>
+</html>
