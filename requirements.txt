@@ -5,7 +5,6 @@ python-multipart
 jinja2
 passlib
 openai
-rembg
 pillow
 gunicorn==23.0.0
-pyjwt
+PyJWT
